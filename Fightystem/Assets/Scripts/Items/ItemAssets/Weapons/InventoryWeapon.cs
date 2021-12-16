@@ -8,9 +8,11 @@ using UnityEngine;
 /// </summary>
 /// <typeparam name="WeaponBehaviour">Generic type of the behaviour that will controll weapons of this type</typeparam>
 /// <typeparam name="WeaponStats">Generic type of the Itemstats the weaponbehaviour will use. Choose always the type that inherits from this class</typeparam>
-public abstract class InventoryWeapon<WeaponBehaviour, WeaponStats> : InstantiatableBehaviourItem<WeaponBehaviour, WeaponStats>, IInstantiatableWeapon<WeaponBehaviour,WeaponStats>
-    where WeaponBehaviour : EquippedWeapon<WeaponBehaviour,WeaponStats> 
-    where WeaponStats : InventoryWeapon<WeaponBehaviour,WeaponStats>
+public abstract class InventoryWeapon<WeaponBehaviour, WeaponStats, PlayerWeaponBehaviour, NPCWeaponBehaviour> : InstantiatableBehaviourItem<WeaponBehaviour, WeaponStats, PlayerWeaponBehaviour, NPCWeaponBehaviour>, IInstantiatableWeapon<WeaponBehaviour, WeaponStats, PlayerWeaponBehaviour, NPCWeaponBehaviour>
+    where WeaponStats : InstantiatableBehaviourItem<WeaponBehaviour, WeaponStats, PlayerWeaponBehaviour, NPCWeaponBehaviour>
+    where WeaponBehaviour : EquippedItemBehaviour<WeaponBehaviour, WeaponStats, PlayerWeaponBehaviour, NPCWeaponBehaviour>
+    where PlayerWeaponBehaviour : PlayerItemUser<WeaponBehaviour, WeaponStats, PlayerWeaponBehaviour, NPCWeaponBehaviour>
+    where NPCWeaponBehaviour : NpcItemUser<WeaponBehaviour, WeaponStats, PlayerWeaponBehaviour, NPCWeaponBehaviour>
 {
     [Tooltip("Damage the weapon deals on hit")]
     [Range(1, 100)]

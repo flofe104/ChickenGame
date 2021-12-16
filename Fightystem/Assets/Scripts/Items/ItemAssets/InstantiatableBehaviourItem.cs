@@ -2,16 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InstantiatableBehaviourItem<ItemBehaviour, ItemStats> : InstantiableInventoryItem
-    where ItemStats : InstantiatableBehaviourItem<ItemBehaviour, ItemStats>
-    where ItemBehaviour : EquippedItem<ItemBehaviour, ItemStats>
+public class InstantiatableBehaviourItem<ItemBehaviour, ItemStats, PlayerBehaviour, NpcBehaviour> : InstantiableInventoryItem, IInstantiatableItemBehaviour<ItemBehaviour, ItemStats, PlayerBehaviour, NpcBehaviour>
+    where ItemStats : InstantiatableBehaviourItem<ItemBehaviour, ItemStats, PlayerBehaviour, NpcBehaviour>
+    where ItemBehaviour : EquippedItemBehaviour<ItemBehaviour, ItemStats, PlayerBehaviour, NpcBehaviour>
+    where PlayerBehaviour : PlayerItemUser<ItemBehaviour, ItemStats, PlayerBehaviour, NpcBehaviour>
+    where NpcBehaviour : NpcItemUser<ItemBehaviour, ItemStats, PlayerBehaviour, NpcBehaviour>
 {
 
 
-    public ItemBehaviour CreateInstanceAndGetBehaviour(Transform parent)
+    public ItemBehaviour CreateUserBehaviourAndInstantiateItem(IItemEquipper equipper)
     {
-        GameObject instance = CreateInstance(parent);
-        return instance.GetComponent<ItemBehaviour>();
+        GameObject instance = CreateInstance(equipper.GetItemParent);
+        ItemBehaviour result = instance.GetComponent<ItemBehaviour>();
+        var user = equipper.SelectUserBehaviour<ItemBehaviour, ItemStats, PlayerBehaviour, NpcBehaviour>();
+        user.SetItemBehaviour(result);
+        return result;
     }
 
     protected override void OnInstantiate(GameObject instance)

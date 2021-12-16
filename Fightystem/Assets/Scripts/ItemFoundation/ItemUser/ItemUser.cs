@@ -1,3 +1,5 @@
+using System;
+using UnityEditor.Animations;
 using UnityEngine;
 
 public abstract class ItemUser<ItemBehaviour, ItemStats, PlayerBehaviour, NpcBehaviour> : MonoBehaviour
@@ -17,6 +19,38 @@ public abstract class ItemUser<ItemBehaviour, ItemStats, PlayerBehaviour, NpcBeh
         item = behaviour;
         OnItemBehaviourAssigned();
     }
+
+    private Animator anim;
+
+    public Animator Anim
+    {
+        get
+        {
+            if(anim == null)
+            {
+                anim = gameObject.AddComponent<Animator>();
+            }
+            return anim;
+        }
+    }
+
+    protected AnimatorController animator;
+
+    public AnimatorController Animator
+    {
+        get
+        {
+            return animator;
+        }
+        set
+        {
+            animator = value;
+            anim.runtimeAnimatorController = animator;
+            OnItemAnimationAssigned(animator);
+        }
+    }
+
+    protected virtual void OnItemAnimationAssigned(AnimatorController animator) { }
 
     protected virtual void OnItemBehaviourAssigned() { }
 

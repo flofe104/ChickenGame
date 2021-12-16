@@ -8,11 +8,11 @@ public class AssetMenue : MonoBehaviour
 
     private const string BASE_FOLDER_NAME = "ScriptableObjects/";
 
-    //[MenuItem("Assets/Create/Custom/Weapons/MeleeWeapons")]
-    //public static void NewMeleeWeapon()
-    //{
-    //    AssetCreator.CreateAsset<InventoryMeleeWeapon>(BASE_FOLDER_NAME + "MeleeWeapons");
-    //}
+    [MenuItem("Assets/Create/Custom/Weapons/MeleeWeapons")]
+    public static void NewMeleeWeapon()
+    {
+        AssetCreator.CreateAsset<MeleeSlashItem>(BASE_FOLDER_NAME + "MeleeWeapons");
+    }
 
 
 }

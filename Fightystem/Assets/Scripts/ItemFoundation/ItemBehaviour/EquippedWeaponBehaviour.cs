@@ -14,7 +14,7 @@ public abstract class EquippedWeaponBehaviour<WeaponBehaviour, WeaponStats, Play
     where NPCWeaponBehaviour : NpcItemUser<WeaponBehaviour, WeaponStats, PlayerWeaponBehaviour, NPCWeaponBehaviour>
 {
 
-    protected WeaponStats Weapon => item;
+    protected WeaponStats Weapon => Item;
 
     public bool IsInAttack { get; protected set; }
 

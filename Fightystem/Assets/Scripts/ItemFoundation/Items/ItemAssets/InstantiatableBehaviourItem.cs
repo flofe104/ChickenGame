@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Animations;
 using UnityEngine;
 
 public class InstantiatableBehaviourItem<ItemBehaviour, ItemStats, PlayerBehaviour, NpcBehaviour> : InstantiableInventoryItem, IInstantiatableItemBehaviour<ItemBehaviour, ItemStats, PlayerBehaviour, NpcBehaviour>
@@ -10,12 +11,17 @@ public class InstantiatableBehaviourItem<ItemBehaviour, ItemStats, PlayerBehavio
 {
 
 
+    public AnimatorController animationController;
+    public Animator animator;
+
     public ItemBehaviour CreateUserBehaviourAndInstantiateItem(IItemEquipper equipper)
     {
         GameObject instance = CreateInstance(equipper.GetItemParent);
         ItemBehaviour result = instance.GetComponent<ItemBehaviour>();
         var user = equipper.SelectUserBehaviour<ItemBehaviour, ItemStats, PlayerBehaviour, NpcBehaviour>();
         user.SetItemBehaviour(result);
+        user.Animator = animationController;
+        result.SetUserAnimator(user.Anim);
         return result;
     }
 
@@ -26,9 +32,12 @@ public class InstantiatableBehaviourItem<ItemBehaviour, ItemStats, PlayerBehavio
 
     protected ItemBehaviour AddItemBehaviour(GameObject instance)
     {
-        ItemBehaviour item = instance.AddComponent<ItemBehaviour>();
-        item.Item = (ItemStats)this;
-        return item;
+        ItemBehaviour itemBehaviour = instance.AddComponent<ItemBehaviour>();
+        itemBehaviour.Item = (ItemStats)this;
+        WorkOnItemBehaviour(itemBehaviour);
+        return itemBehaviour;
     }
+
+    protected virtual void WorkOnItemBehaviour(ItemBehaviour itemBehaviour) { }
 
 }

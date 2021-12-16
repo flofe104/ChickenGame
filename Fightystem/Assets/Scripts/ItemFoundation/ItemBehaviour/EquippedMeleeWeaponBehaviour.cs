@@ -7,7 +7,7 @@ using UnityEngine.Assertions;
 /// <summary>
 /// Behaviour controller of a melee Weapon
 /// </summary>
-public abstract class EquippedMeleeWeapon<WeaponBehaviour, WeaponStats, PlayerWeaponBehaviour, NPCWeaponBehaviour> : EquippedWeaponBehaviour<WeaponBehaviour, WeaponStats, PlayerWeaponBehaviour, NPCWeaponBehaviour>
+public abstract class EquippedMeleeWeaponBehaviour<WeaponBehaviour, WeaponStats, PlayerWeaponBehaviour, NPCWeaponBehaviour> : EquippedWeaponBehaviour<WeaponBehaviour, WeaponStats, PlayerWeaponBehaviour, NPCWeaponBehaviour>
     where WeaponStats : InventoryMeleeWeapon<WeaponBehaviour, WeaponStats, PlayerWeaponBehaviour, NPCWeaponBehaviour>
     where WeaponBehaviour : EquippedItemBehaviour<WeaponBehaviour, WeaponStats, PlayerWeaponBehaviour, NPCWeaponBehaviour>
     where PlayerWeaponBehaviour : PlayerItemUser<WeaponBehaviour, WeaponStats, PlayerWeaponBehaviour, NPCWeaponBehaviour>
@@ -85,8 +85,8 @@ public abstract class EquippedMeleeWeapon<WeaponBehaviour, WeaponStats, PlayerWe
 
     public void ApplyWeaponStatsToCollider()
     {
-        WeaponCollider.size = new Vector3(0.5f,Weapon.range, 0.5f);
-        WeaponCollider.center = new Vector3(0, Weapon.range / 2, 0);
+        WeaponCollider.size = new Vector3(0.5f,Weapon.colliderLength, 0.5f);
+        WeaponCollider.center = new Vector3(0, Weapon.colliderLength / 2, 0);
     }
 
     protected void OnAttackEnded()

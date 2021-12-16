@@ -8,10 +8,13 @@ public class InventoryMeleeWeapon<WeaponBehaviour, WeaponStats, PlayerWeaponBeha
     where PlayerWeaponBehaviour : PlayerItemUser<WeaponBehaviour, WeaponStats, PlayerWeaponBehaviour, NPCWeaponBehaviour>
     where NPCWeaponBehaviour : NpcItemUser<WeaponBehaviour, WeaponStats, PlayerWeaponBehaviour, NPCWeaponBehaviour>
 {
-    [Range(0, 2)]
-    public float range;
 
-    [Range(45, 180)]
-    public float rotationAngle;
+    protected float colliderUpOffset;
+
+    public float ColliderUpOffset => colliderUpOffset;
+
+    [Range(0, 3)]
+    public float colliderLength;
+
 
 }

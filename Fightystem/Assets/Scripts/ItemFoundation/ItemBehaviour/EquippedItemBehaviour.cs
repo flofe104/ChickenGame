@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using UnityEditor.Animations;
 using UnityEngine;
 
 public class EquippedItemBehaviour<ItemBehaviour, ItemStats, PlayerBehaviour, NpcBehaviour> : MonoBehaviour
@@ -10,12 +12,7 @@ public class EquippedItemBehaviour<ItemBehaviour, ItemStats, PlayerBehaviour, Np
 {
 
 
-    protected ItemStats item;
-
-    public virtual void DestroyItem()
-    {
-        Destroy(gameObject);
-    }
+    private ItemStats item;
 
     public ItemStats Item
     {
@@ -30,7 +27,18 @@ public class EquippedItemBehaviour<ItemBehaviour, ItemStats, PlayerBehaviour, Np
         }
     }
 
-    protected virtual void OnItemStatsAssigned(ItemStats stats) { }
+    protected Animator userAnimator;
 
+    public void SetUserAnimator(Animator animator)
+    {
+        userAnimator = animator;
+    }
+
+    public virtual void DestroyItem()
+    {
+        Destroy(gameObject);
+    }
+
+    protected virtual void OnItemStatsAssigned(ItemStats stats) { }
 
 }
